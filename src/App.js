@@ -1,8 +1,27 @@
-function App() {
+import React, { Fragment } from "react";
+import Home from "./pages/home";
+import { ConfigProvider, Layout } from "antd";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import { HeaderBox, FooterBox } from "./components";
+const { Content } = Layout;
+
+const App = () =>{
   return (
-    <div className="App">
-      <h1>This is React App.</h1>
-    </div>
+    <Fragment>
+      <Layout>
+      <HeaderBox />
+        <Content>
+          <HashRouter>
+            <Switch>
+              <Route path="/home" component={Home} />
+              <Route exact path="/" component={Home} />
+              <Redirect to={"/"} />
+            </Switch>
+          </HashRouter>
+        </Content>
+        <FooterBox />
+      </Layout>
+    </Fragment>
   );
 }
 

@@ -1,3 +1,49 @@
-body{
-    color: aqua;
+body,html,ul{
+  margin: 0;
+}
+body,html{
+  min-height: 100vh;
+  font-family: PingFangSC-Regular, PingFang SC;
+}
+a{
+  text-decoration: none;
+  color: #fff;
+}
+.boxBackground {
+  background: #000000;
+}
+.contentBox {
+  width: 1152px;
+  /* overflow: hidden; */
+  margin: 0 auto;
+}
+.flex_center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ant-layout{
+  min-height: 100vh;
+}
+.ant-input:focus, .ant-input-focused{
+  box-shadow: none;
+}
+/* 全局样式 */
+.mt_24{
+  margin-top: 24px;
+}
+.mb_24{
+  margin-bottom: 24px;
+}
+.p_24{
+  padding: 0 24px;
+}
+.mt_16{
+  margin-top: 16px;
+}
+.mb_16{
+  margin-bottom: 16px;
+}
+.mb_8{
+  margin-bottom: 8px;
 }
