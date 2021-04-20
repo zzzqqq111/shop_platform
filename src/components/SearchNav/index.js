@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './index.less'
 import { Button, Input } from 'antd';
-import logo from '@common/images/global-logo.png';
+import logo from '@images/global-logo.png';
 import useIntersection from '@utils/useIntersection';
 import classnames from 'classnames';
 
@@ -32,6 +32,7 @@ function withFix(Component) {
       position: 'fixed',
       top: 0,
       left: 0,
+      zIndex: 9999
     }) : {};
 
     return (<div style={{ width: '100%', position: 'relative', zIndex: 1 }}>

@@ -1,4 +1,5 @@
 import FooterBox from "./footer";
 import HeaderBox from "./header";
 import SearchNav from './SearchNav'
-export { HeaderBox, FooterBox, SearchNav };
+import FloorMenu from './floor'
+export { HeaderBox, FooterBox, SearchNav, FloorMenu };

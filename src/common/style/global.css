@@ -1,11 +1,19 @@
-body,html,ul{
+body,
+html {
   margin: 0;
 }
-body,html{
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+body,
+html {
   min-height: 100vh;
   font-family: PingFangSC-Regular, PingFang SC;
 }
-a{
+a {
   text-decoration: none;
   color: #fff;
 }
@@ -22,28 +30,58 @@ a{
   justify-content: space-between;
   align-items: center;
 }
-.ant-layout{
+.flex_1 {
+  flex: 1;
+}
+.ant-layout {
   min-height: 100vh;
 }
-.ant-input:focus, .ant-input-focused{
+.ant-input:focus,
+.ant-input-focused {
   box-shadow: none;
 }
 /* 全局样式 */
-.mt_24{
+.mt_24 {
   margin-top: 24px;
 }
-.mb_24{
+.mb_24 {
   margin-bottom: 24px;
 }
-.p_24{
+.p_24 {
   padding: 0 24px;
 }
-.mt_16{
+.mt_16 {
   margin-top: 16px;
 }
-.mb_16{
+.mb_16 {
   margin-bottom: 16px;
 }
-.mb_8{
+.mb_8 {
   margin-bottom: 8px;
+}
+:root {
+  --brightRed: #ff1213;
+  --brightOrange: #ff872e;
+  --brightBlue: #177aff;
+  --brightGreen: #0ee56c;
+  --lightGray: #f7f7f7;
+  --mediumGray: #f2f2f2;
+  --darkGray: #d9d9d9;
+  --white: #ffffff;
+  --disabled: #bfbfbf;
+  --minor: #8c8c8c;
+  --text: #595959;
+  --title: #262626;
+  --stress: #000000;
+}
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover,
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover,
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active,
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open,
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open,
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
+.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected {
+  color: var(--brightRed);
+  border-bottom: 2px solid var(--brightRed);
 }

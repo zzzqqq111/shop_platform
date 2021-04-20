@@ -2,7 +2,7 @@ import React from "react";
 import "./index.less";
 import classnames from "classnames";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import user from '@common/images/icon/user.png';
+import user from '@images/icon/user.png';
 
 const TopNav = React.memo((props) => {
   let content = [

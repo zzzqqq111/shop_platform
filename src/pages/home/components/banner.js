@@ -1,6 +1,7 @@
 import React from "react";
 import "../index.less";
 import AwesomeSwiper from "react-awesome-swiper";
+import image_jzcl from '@images/icon/image_jzcl.png'
 
 export default class SlideShow extends React.Component {
   constructor(props) {
@@ -46,19 +47,19 @@ export default class SlideShow extends React.Component {
             className="swiper-slide"
             onClick={() => this.SlideBtn("slider1")}
           >
-            <img src={require("@common/images/icon/image_jzcl.png")} />
+            <img src={image_jzcl} />
           </div>
           <div
             className="swiper-slide"
             onClick={() => this.SlideBtn("slider2")}
           >
-            <img src={require("@common/images/icon/image_jzcl.png")} />
+            <img src={image_jzcl} />
           </div>
           <div
             className="swiper-slide"
             onClick={() => this.SlideBtn("slider3")}
           >
-            <img src={require("@common/images/icon/image_jzcl.png")} />
+            <img src={image_jzcl} />
           </div>
         </div>
         {/* 显示左边分页箭头 */}

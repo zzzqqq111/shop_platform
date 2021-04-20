@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.less";
 import classnames from 'classnames'
-import logo from '@common/images/logo.png';
+import logo from '@images/logo.png';
 // const data = {
 //   联系商务: ['在线咨询：立即咨询', '商务邮箱：XXXXX@zxhj518.com','联系电话：1589963254798', '市场合作：XXXXX@zxhj518.com'],
 //   技术支持: ['技术支持QQ：158965447', '技术支持邮箱：XXXXX@zxhj518.com'],

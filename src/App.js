@@ -5,12 +5,12 @@ import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import { HeaderBox, FooterBox } from "./components";
 const { Content } = Layout;
 
-const App = () =>{
+const App = () => {
   return (
     <Fragment>
       <Layout>
-      <HeaderBox />
-        <Content>
+        <HeaderBox />
+        <Content style={{paddingBottom: '50px',background: '#f7f7f7'}}>
           <HashRouter>
             <Switch>
               <Route path="/home" component={Home} />
@@ -23,6 +23,6 @@ const App = () =>{
       </Layout>
     </Fragment>
   );
-}
+};
 
 export default App;

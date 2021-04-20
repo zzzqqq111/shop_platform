@@ -37,6 +37,7 @@ module.exports = {
         sourceMap: false,
         parallel: true,
       }),
+      new webpack.HotModuleReplacementPlugin()
     ],
   },
   babel: {

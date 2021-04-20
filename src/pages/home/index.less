@@ -20,6 +20,7 @@
     height: 100%;
   }
 }
+// banner
 .slideshow {
   .swiper-button-next, .swiper-button-prev {
     width: 32px;
@@ -45,7 +46,7 @@
     padding-right: 24px;
   }
 }
-
+// 产品
 .contentBox {
   .header{
     display: flex;
@@ -60,25 +61,47 @@
     align-items: center;
     font-size: 14px;
     color: #8c8c8c;
+    img{
+      width: 16px;
+      height: 16px;
+      margin-left: 6px;
+    }
   }
   .topOne {
     display: flex;
     flex-direction: row;
     height: 278px;
     justify-content: space-between;
-    .oneBox {
+    .commbox{
       display: flex;
+      .commonItem{
+        background: #fff;
+        border-radius: 4px;
+        padding: 0 16px;
+        position: relative;
+        margin-right: 16px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        box-sizing: border-box;
+        .levelImg{
+          position: absolute;
+          top: 8px;
+          left: -12px
+        }
+      }
+    }
+    .oneBox {
       .oneBox_item {
         position: relative;
         width: 176px;
         height: 100%;
-        margin-right: 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
         border-radius: 4px;
+        .levelImg{
+          width: 142px;
+          height: 40px;
+        }
         .spuImg{
           width: 128px;
           height: 128px;
@@ -86,23 +109,29 @@
       }
     }
     .twoBox{
-      display: flex;
       flex-wrap: wrap;
       .two_item{
-        position: relative;
         width: 180px;
         height: 136px;
-        margin-right: 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
-        border-radius: 4px;
         margin-bottom: 6px;
       }
       .two_item:nth-child(3n){
         margin-right: 0;
+      }
+      .levelImg{
+        width: 46px;
+        height: 40px;
+      }
+      .spuImg{
+        width: 72px;
+        height: 72px;
+      }
+      .spuTitle{
+        width: 148px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: 4px 0;
       }
     }
   }
@@ -114,14 +143,70 @@
     font-weight: 500;
   }
   .spuPrice{
-    color: #FF1213;
+    color: var(--brightRed);
     font-size: 16px;
+  }
+  .proLeft{
+    width: 248px;
+    .redFloor{
+      color: var(--brightRed);
+      font-size: 20px;
+    }
+  }
+  .secondCategory{
+    display: flex;
+    align-items: center;
+    span{
+      margin-right: 24px;
+    }
+  }
+  :global{
+    .ant-tabs-nav-list .ant-tabs-tab{
+      padding: 0 0 2px 0;
+    }
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+      color: var(--brightRed);
+    }
   }
 }
 .floorBigTitle{
   display: flex;
 }
+.floorContent{
+  position: relative;
+}
+.floorContentItem{
+  display: flex;
+  .big{
+    width: 248px;
+    height: 600px;
+  }
+  .oneBox_item{
+    padding: 24px;
+    width: 218px;
+    height: 296px;
+    margin-left: 8px;
+    background: #fff;
+    margin-bottom: 8px;
+    .spuImg{
+      width: 158px;
+      height: 158px;
+    }
+  }
+}
 .title_margin{
   margin-top: 24px;
   margin-bottom: 16px;
+}
+.tabCategory{
+  display: flex;
+  justify-content: space-between;
+  .menu_box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: none;
+    background: transparent;
+    line-height: initial;
+  }
 }

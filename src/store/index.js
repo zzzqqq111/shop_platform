@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import reducer from './reducer'
+import reducer from '../reducers'
 import thunk from 'redux-thunk'
 
 // 这里让项目支持浏览器插件Redux DevTools
