@@ -18,8 +18,6 @@ export default function useIntersection(dom, deps, preview) {
     if (dom) { io.observe(dom) };
 
   }, deps);
-
-  console.log(dom, show, deps, 'show,deps')
   return ({
     show
   })

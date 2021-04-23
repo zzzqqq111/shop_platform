@@ -1,154 +1,275 @@
-import axios from 'axios'
-import qs from 'qs'
-import { CORS, serviceUrl } from './config'
+/**
+ * 网络请求配置
+ */
+import axios from "axios";
+import LocalStoage from "./LocalStoage";
+axios.defaults.timeout = 100000;
+axios.defaults.baseURL = "http://test.mediastack.cn/";
 
-import jsonp from 'jsonp'
-import clonedeep from 'lodash.clonedeep'
-import pathToRegexp from 'path-to-regexp'
-import { message, Modal } from 'antd'
-
-// 添加一个请求拦截器
+/**
+ * http request 拦截器
+ */
 axios.interceptors.request.use(
-    function (config) {
-        // 每次请求时会从localStorage中获取token
-        let token = localStorage.getItem('token')
-        if (token) {
-            // 把token加入到默认请求参数中
-            config.headers.common['token'] = token
-        }
-        let marketToken = localStorage.getItem('marketToken')
-        if (marketToken) {
-            // 把marketToken加入到默认请求参数中
-            config.headers.common['marketToken'] = marketToken
-        }
-        return config
-    },
-    function (error) {
-        // Do something with request error
-        return Promise.reject(error)
+  (config) => {
+    config.data = JSON.stringify(config.data);
+    let params = { "Content-Type": "application/json",}
+    const zxhj_userInfo = LocalStoage.getItem("zxhj_userInfo") || {};
+    const projectId = window.localStorage.getItem("projectId") || null;
+    const { token } = zxhj_userInfo;
+    if (token) {
+      // 把token加入到默认请求参数中
+      params.authorization = `Bearer ${token}`;
     }
-)
+    if (projectId) {
+      params.projectId= projectId;
+    }
+    config.headers = params
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-// 添加一个响应拦截器
+/**
+ * http response 拦截器
+ */
 axios.interceptors.response.use(
-    function (response) {
-        // console.log("axios response response:",response)
-        return response
-    },
-    function (error) {
-        // Do something with response error
-        return Promise.reject(error)
+  (response) => {
+    if (response.data.errCode === 2) {
+      console.log("过期");
     }
-)
+    return response;
+  },
+  (error) => {
+    console.log("请求出错：", error);
+  }
+);
 
-const fetch = options => {
-    let { method = 'get', data, fetchType, responseType, url } = options
-
-    const cloneData = clonedeep(data)
-
-    try {
-        let domin = ''
-        if (url.match(/[a-zA-z]+:\/\/[^/]*/)) {
-            domin = url.match(/[a-zA-z]+:\/\/[^/]*/)[0]
-            url = url.slice(domin.length)
-        }
-        const match = pathToRegexp.parse(url)
-        url = pathToRegexp.compile(url)(data)
-        for (let item of match) {
-            if (item instanceof Object && item.name in cloneData) {
-                delete cloneData[item.name]
-            }
-        }
-        url = domin + url
-    } catch (e) {
-        message.error(e.message)
-    }
-
-    if (fetchType === 'JSONP') {
-        return new Promise((resolve, reject) => {
-            jsonp(
-                url,
-                {
-                    param: `${qs.stringify(data)}&callback`,
-                    name: `jsonp_${new Date().getTime()}`,
-                    timeout: 4000
-                },
-                (error, result) => {
-                    if (error) {
-                        reject(error)
-                    }
-                    resolve({ statusText: 'OK', status: 200, data: result })
-                }
-            )
-        })
-    }
-
-    switch (method.toLowerCase()) {
-        case 'get':
-            return axios.get(url, {
-                params: cloneData
-            })
-        case 'delete':
-            return axios.delete(url, {
-                data: cloneData
-            })
-        case 'post':
-            return axios.post(url, cloneData, { responseType })
-        case 'put':
-            return axios.put(url, cloneData)
-        case 'patch':
-            return axios.patch(url, cloneData)
-        default:
-            return axios(options)
-    }
+/**
+ * 封装get方法
+ * @param url  请求url
+ * @param params  请求参数
+ * @returns {Promise}
+ */
+export function R_GET(url, params = {}) {
+  return new Promise((resolve, reject) => {
+    axios.get(url, {
+        params: params,
+      })
+      .then((response) => {
+        landing(url, params, response.data);
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
 
-export default function request (options) {
-    if (options.url && options.url.indexOf('//') > -1) {
-        const origin = `${options.url.split('//')[0]}//${options.url.split('//')[1].split('/')[0]}`
-        if (window.location.origin !== origin) {
-            if (CORS && CORS.indexOf(origin) > -1) {
-                options.fetchType = 'CORS'
-            } else {
-                options.fetchType = 'JSONP'
-            }
-        }
+/**
+ * 封装post请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function R_POST(url, data) {
+  return new Promise((resolve, reject) => {
+    axios.post(url, data).then(
+      (response) => {
+        //关闭进度条
+        resolve(response.data);
+      },
+      (err) => {
+        reject(err);
+      }
+    );
+  });
+}
+
+/**
+ * 封装patch请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+export function R_PATCH(url, data = {}) {
+  return new Promise((resolve, reject) => {
+    axios.patch(url, data).then(
+      (response) => {
+        resolve(response.data);
+      },
+      (err) => {
+        msag(err);
+        reject(err);
+      }
+    );
+  });
+}
+
+/**
+ * 封装put请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function R_PUT(url, data = {}) {
+  return new Promise((resolve, reject) => {
+    axios.put(url, data).then(
+      (response) => {
+        resolve(response.data);
+      },
+      (err) => {
+        msag(err);
+        reject(err);
+      }
+    );
+  });
+}
+
+/**
+ * 封装delete请求
+ * @param url
+ * @param data
+ * @returns {Promise}
+ */
+
+export function R_DELETE(url, data = {}) {
+  return new Promise((resolve, reject) => {
+    axios.delete(url, data).then(
+      (response) => {
+        resolve(response.data);
+      },
+      (err) => {
+        msag(err);
+        reject(err);
+      }
+    );
+  });
+}
+
+//统一接口处理，返回数据
+export default function (fecth, url, param) {
+  let _data = "";
+  return new Promise((resolve, reject) => {
+    switch (fecth) {
+      case "get":
+        console.log("begin a get request,and url:", url);
+        R_GET(url, param)
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (error) {
+            console.log("get request GET failed.", error);
+            reject(error);
+          });
+        break;
+      case "post":
+        R_POST(url, param)
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (error) {
+            console.log("请求 failed.", error);
+            reject(error);
+          });
+        break;
+      case "put":
+        R_PUT(url, param)
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (error) {
+            console.log("请求 failed.", error);
+            reject(error);
+          });
+        break;
+      case "delete":
+        R_DELETE(url, param)
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (error) {
+            console.log("删除失败.", error);
+            reject(error);
+          });
+        break;
+      case "patch":
+        R_PATCH(url, param)
+          .then(function (response) {
+            resolve(response);
+          })
+          .catch(function (error) {
+            console.log("请求failed.", error);
+            reject(error);
+          });
+        break;
+      default:
+        break;
     }
+  });
+}
 
-    return fetch(options)
-        .then(response => {
-            const { statusText, status } = response
-            let data = response.data
-            return data
-        })
-        .catch(error => {
-            const { response } = error
-            let msg
-            let statusCode
-            if (response && response instanceof Object) {
-                const { data, statusText } = response
-                statusCode = response.status
-                if (statusCode === 401) {
-                    window.location.href = `${serviceUrl}/login`
-                } else if (statusCode === 402) {
-                    Modal.warning({
-                        title: '下线提醒',
-                        content: <h3>您的账号已在其他地方登录,请重新登录!</h3>,
-                        okText: '去登录',
-                        onOk: () => {
-                            window.location.href = `${serviceUrl}/login`
-                        }
-                    })
-                } else if (statusCode === 403) {
-                    msg = data.message || '无权限'
-                } else {
-                    msg = data.message || statusText
-                }
-            } else {
-                statusCode = 600
-                msg = error.message || 'Network Error'
-            }
+//失败提示
+function msag(err) {
+  if (err && err.response) {
+    switch (err.response.status) {
+      case 400:
+        alert(err.response.data.error.details);
+        break;
+      case 401:
+        alert("请登录");
+        break;
 
-            throw { success: false, statusCode, message: msg }
-        })
+      case 403:
+        alert("拒绝访问");
+        break;
+
+      case 404:
+        alert("请求地址出错");
+        break;
+
+      case 408:
+        alert("请求超时");
+        break;
+
+      case 500:
+        alert("服务器内部错误");
+        break;
+
+      case 501:
+        alert("服务未实现");
+        break;
+
+      case 502:
+        alert("网关错误");
+        break;
+
+      case 503:
+        alert("服务不可用");
+        break;
+
+      case 504:
+        alert("网关超时");
+        break;
+
+      case 505:
+        alert("HTTP版本不受支持");
+        break;
+      default:
+    }
+  }
+}
+
+/**
+ * 查看返回的数据
+ * @param url
+ * @param params
+ * @param data
+ */
+function landing(url, params, data) {
+  if (data.code === 200) {
+  }
 }

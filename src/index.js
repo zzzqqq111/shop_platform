@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import App from './App';  
-import store from './store'
+import store from '@redux/store.js'
 import { Provider } from 'react-redux'
 import '@styles/global.css'
 import 'antd/dist/antd.css';

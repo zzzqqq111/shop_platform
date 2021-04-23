@@ -2,9 +2,11 @@ import React from "react";
 import "./index.less";
 import classnames from "classnames";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import user from '@images/icon/user.png';
+import user from "@images/icon/user.png";
+import { useSelector } from "react-redux";
 
 const TopNav = React.memo((props) => {
+  const { userInfo } = useSelector((state) => state.user);
   let content = [
     {
       name: "企业官网",
@@ -42,11 +44,20 @@ const TopNav = React.memo((props) => {
         </div>
         <div className={classnames("flex_center", "topRight")}>
           <Router>
-            <Link to="#"><img src={user} alt='' />测试用户</Link>
+            <Link to="#">
+              <img src={user} alt="" />
+              测试用户
+            </Link>
             <Link to="#">待收货</Link>
             <Link to="#">待发货</Link>
-            <Link to="#"><img src={user} alt='' />消息提醒</Link>
-            <Link to="#"><img src={user} alt='' />购物车</Link>
+            <Link to="#">
+              <img src={user} alt="" />
+              消息提醒
+            </Link>
+            <Link to="#">
+              <img src={user} alt="" />
+              购物车
+            </Link>
           </Router>
         </div>
       </div>

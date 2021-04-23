@@ -65,6 +65,7 @@ module.exports = {
   appUtils: resolveApp('src/utils'),
   appStore: resolveApp('src/store'),
   appStyle: resolveApp('src/common/style'),
+  appRedux: resolveApp('src/redux'),
   appTsConfig: resolveApp('tsconfig.json'),
   appJsConfig: resolveApp('jsconfig.json'),
   yarnLockFile: resolveApp('yarn.lock'),

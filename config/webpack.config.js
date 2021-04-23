@@ -341,6 +341,7 @@ module.exports = function (webpackEnv) {
         '@utils': paths.appUtils,
         '@store': paths.appStore,
         '@styles': paths.appStyle,
+        '@redux': paths.appRedux,
         ...(modules.webpackAliases || {}),
       },
       plugins: [

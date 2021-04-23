@@ -1,0 +1,67 @@
+.menuItem {
+  height: 20%;
+  overflow: hidden;
+  padding: 16px 24px 8px 24px !important;
+  font-size: 16px;
+  color: #fff;
+  position: relative;
+  .little {
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }
+  .name {
+    margin-right: 16px;
+    color: #bfbfbf;
+    font-size: 14px;
+    line-height: 23px;
+  }
+}
+
+.categoryBox {
+  height: 460px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 288px;
+  position: relative;
+  cursor: pointer;
+  p {
+    margin-bottom: 0;
+    line-height: 22px;
+  }
+  .rightBox {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 288px;
+    width: 508px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 4px 4px 6px 2px rgba(0, 0, 0, 0.13);
+    border: 1px solid #f2f2f2;
+    font-size: 12px;
+    color: #262626;
+    z-index: 1;
+    .rightBoxItem {
+      border-bottom: 1px solid #f2f2f2;
+      padding: 8px 16px;
+      p{
+        font-weight: 500;
+      }
+    }
+    .little {
+      font-size: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      font-weight: 400;
+      span {
+        margin-right: 24px;
+        margin-top: 8px;
+      }
+    }
+  }
+}
