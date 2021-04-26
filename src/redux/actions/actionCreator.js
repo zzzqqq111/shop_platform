@@ -1,4 +1,6 @@
 import { api, request } from "@utils";
+import axios from "axios";
+import { message } from 'antd'
 const {
   getBannerList,
   getCategoryList,
@@ -7,7 +9,7 @@ const {
   getProductDetail,
   getUserInfoUrl,
   getUserProject,
-  getShoppingCard
+  getShoppingCard,
 } = api;
 const Types = require("../actionTypes");
 export const getBannerData = () => {
@@ -146,12 +148,11 @@ export const showProjectModal = (params) => {
   };
 };
 
-
 // 购物车
 // 获取购物车
 export const getShopCardList = (params, index) => {
   return (dispatch) => {
-    request("get", `${getShoppingCard}`)
+    request("get", `${getShoppingCard}`, params)
       .then((data) => {
         if (data.code === 200) {
           dispatch({ type: Types.CARD_LIST, data: data.data });
@@ -167,9 +168,65 @@ export const addToShopCardList = (params, index) => {
     request("put", `${getShoppingCard}`, params)
       .then((data) => {
         if (data.code === 200) {
+          message.success('已添加到购物车')
           dispatch({ type: Types.CARD_LIST, data: data.data });
         }
       })
       .catch((error) => console.log(error));
   };
 };
+
+// 更新购物车数量
+export const updateShopCardData = (params, index) => {
+  return (dispatch) => {
+    request(
+      "patch",
+      `${getShoppingCard}/${params.id}?num=${params.num}&skuId=${params.skuId}`
+    )
+      .then((data) => {})
+      .catch((error) => console.log(error));
+  };
+};
+
+// 删除购物车
+export const deleteShopCard = (params) => {
+  return (dispatch) => {
+    axios.delete(getShoppingCard, {
+      data: params.id
+    }).then(res=>{
+      if (res.data.code === 200) {
+        dispatch(getShopCardList());
+      }
+    })
+  };
+};
+
+// x选择购物车
+export const selectShopCard = (params, selectRows) => {
+  return (dispatch) => {
+    dispatch({ type: Types.SELECT_CARDROW_LIST, data: selectRows });
+    // request("post", `${getShoppingCard}/select`, params)
+    //   .then((data) => {
+    //     if (data.code === 200) {
+    //       message.success('已提交')
+    //       // dispatch(getShopCardList());
+    //     }
+    //   })
+    //   .catch((error) => console.log(error));
+  };
+};
+
+// 清空购物车
+export const deleteAllShopCard = (params) => {
+  return (dispatch) => {
+    request("post", `${getShoppingCard}/clear`, params)
+      .then((data) => {
+        if (data.code === 200) {
+          message.success("已清空")
+          dispatch({ type: Types.CARD_LIST, data: [] });
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+};
+

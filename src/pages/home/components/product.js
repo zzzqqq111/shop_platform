@@ -53,7 +53,7 @@ const Product = React.memo((props) => {
       <img alt="" className="spuImg" src={hot.mainPic} />
       <div className="spuTitle">{hot.title}</div>
       <div className="spuPrice" style={{ marginBottom: 2 }}>
-        ¥{hot.lowerPrice}/{hot.unitText}
+        ¥{hot.tradeType === 1 ? hot.lowerPrice : '议价'}/{hot.unitText}
       </div>
     </div>
   ));

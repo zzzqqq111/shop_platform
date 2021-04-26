@@ -50,7 +50,11 @@
     font-size: 16px;
     color: #fff;
     text-align: center;
-    line-height: 48px;
+    line-height: 53px;
+    cursor: pointer;
+  }
+  .ant-checkbox-wrapper span{
+    color: #585858;
   }
 }
 
@@ -77,5 +81,26 @@
   }
   .ant-input-number-handler-wrap{
     display: none;
+  }
+  
+}
+
+.contentBox{
+  .tabStyle{
+    padding-bottom: 28px;
+    display: flex;
+    span{
+      background: #F2F2F2;
+      font-size: 12px;
+      padding: 0 16px;
+      border-radius: 12px;
+      color: #8c8c8c;
+      margin-right: 16px;
+      cursor: pointer;
+      &.active{
+        color: #fff;
+        background: #262626;
+      }
+    }
   }
 }

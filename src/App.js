@@ -1,36 +1,30 @@
 import React, { Fragment } from "react";
 import Home from "./pages/home";
 import ShopDetail from "./pages/detail";
-import ShoppingCard from "./pages/shopCard"
-import { ConfigProvider, Layout } from "antd";
-import {
-  HashRouter,
-  Route,
-  Switch,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
-import { HeaderBox, FooterBox, SearchNav } from "@components";
+import ShoppingCard from "./pages/shopCard";
+import OrderApproval from './pages/submitApproval'
+import Address from './pages/submitApproval/address'
+import { Layout } from "antd";
+import { HashRouter, Route, Switch, Redirect, Router } from "react-router-dom";
+import { HeaderBox, FooterBox } from "@components";
 const { Content } = Layout;
 
 const App = () => {
-  const history = useHistory();
   return (
     <Fragment>
       <Layout>
         <HashRouter>
           <HeaderBox />
-          
-          <Switch>
+          <Content style={{ background: "#f7f7f7" }}>
             <Route exact path="/" component={Home} />
             <Route path="/home" component={Home} />
             <Route path="/detail" component={ShopDetail} />
             <Route path="/shoppingCard" component={ShoppingCard} />
-            <Redirect to={"/"} />
-          </Switch>
+            <Route path='/orderApprove' component={OrderApproval}/>
+            {/* <Redirect to={"/"} /> */}
+          </Content>
+          <FooterBox />
         </HashRouter>
-        <Content style={{ background: "#f7f7f7" }}></Content>
-        <FooterBox />
       </Layout>
     </Fragment>
   );

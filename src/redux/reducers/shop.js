@@ -10,7 +10,7 @@ const initialState = {
   showProject: false,
   projectList: [],
   shoppCardList: [],
-
+  selectRows: []
 };
 
 export default function querybannerList(state = initialState, action) {
@@ -41,9 +41,11 @@ export default function querybannerList(state = initialState, action) {
       state.projectList = action.data;
       return Object.assign({}, state);
     case Types.CARD_LIST:
-        state.shoppCardList = action.data;
-        return Object.assign({}, state);
-      
+      state.shoppCardList = action.data;
+      return Object.assign({}, state);
+    case Types.SELECT_CARDROW_LIST:
+      state.selectRows = action.data;
+      return Object.assign({}, state);
     default:
       return state;
   }

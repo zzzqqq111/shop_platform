@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import ProModal from '../projectSelectModal'
 
 function Top(props) {
-  const {showTitle = true, showSearch= true, title='全部商品分类', showProject=false} = props
+  const {showTitle = true, showSearch= true, title='全部商品分类',content=null} = props
   let history = useHistory();
   const handleClick = () =>{
     history.push("/home");
@@ -28,7 +28,7 @@ function Top(props) {
             <Button className="button">搜索</Button>
           </div>}
         </div>
-        {showProject && <ProModal />}
+        {content}
       </div>
     </div>
   );

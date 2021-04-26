@@ -19,5 +19,10 @@ module.exports = {
     getUserProject: `${APIV1}/project/getByUserId`, //获取用户所有项目
    
     getShoppingCard: `${APIV1}/shoppingCar`, //    购物车
+
+    // 地址
+    getAddressList: `${APIV1}/address`,
+    getDefaultAddressList: `${APIV1}/getDefaultAdress`,
+    setDefaultAddress: `${APIV1}/address/setDefaultAddress`,
   },
 };

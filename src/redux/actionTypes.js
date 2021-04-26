@@ -9,8 +9,13 @@ export const CHANGE_CATEGORY_PRODUCT = 'CHANGE_CATEGORY_PRODUCT'  // 获取分�
 export const PRODUCT_DETAIL = 'PRODUCT_DETAIL'  //商品详情
 export const PRODUCT_MODAL = 'PRODUCT_MODAL'
 export const CARD_LIST = 'CARD_LIST'
+export const SELECT_CARDROW_LIST = 'SELECT_CARDROW_LIST'
 
 // 用户
 export const USER_INFO = 'USER_INFO'  // 用户信息
 export const PROJECT_LIST = 'PROJECT_LIST'  // 用户信息
+
+// 地址
+export const ADDRESS_LIST = 'ADDRESS_LIST'  // 地址
+export const ADDRESS_DETAIL = 'ADDRESS_DETAIL'  // 地址
 

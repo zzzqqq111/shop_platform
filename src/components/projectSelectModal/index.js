@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import ModalContent from './ModalContent'
 
 const ProModal = React.memo((props) => {
-    console.log(props)
   const [visible, setVisible] = useState(false);
   const {projectList = []} = useSelector(state=>state.shop)
   const onChange = () => {

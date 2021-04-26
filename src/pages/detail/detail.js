@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { Button, InputNumber } from "antd";
+import { InputNumber } from "antd";
 import ShopPreview from "./picPreview";
 import "./index.less";
 import classnames from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import { DownOutlined } from "@ant-design/icons";
 import {ProModal} from "@components";
-import { PRODUCT_MODAL } from "@redux/actionTypes";
+import { addToShopCardList } from "@redux/actions/actionCreator";
 
 const ShopTopDetail = React.memo(() => {
   const { detailInfo = {}, showProject, projectList = [] } = useSelector(
@@ -26,13 +25,14 @@ const ShopTopDetail = React.memo(() => {
     setCount(count - 1);
   };
 
-  // const changeCardProject = () => {
-  //   dispatch({ type: PRODUCT_MODAL, data: !showProject });
-  // };
-  // const sureClick = (id) => {
-  //   window.localStorage.setItem("projectId", id);
-  //   changeCardProject();
-  // };
+  // 添加到购物车
+  const addShopCard = () => {
+    dispatch(addToShopCardList({
+      num: count,
+      skuId: skuList[index].id,
+      spuId: skuList[index].spuId
+    }))
+  }
   return (
     <Fragment>
       <div style={{ display: "flex", flexDirection: "row", height: 500 }}>
@@ -135,7 +135,7 @@ const ShopTopDetail = React.memo(() => {
           {count > skuList[index]?.centralWarehouseStock ? (
             <div className={classnames("jiagou", "disables")}>无货预约</div>
           ) : (
-            <div className="jiagou">加入购物车</div>
+            <div className="jiagou" onClick={addShopCard}>加入购物车</div>
           )}
         </div>
       </div>

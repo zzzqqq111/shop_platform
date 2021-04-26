@@ -1,7 +1,3 @@
-body,
-html {
-  margin: 0;
-}
 ul,
 li {
   list-style: none;
@@ -11,6 +7,7 @@ li {
 body,
 html {
   min-height: 100vh;
+  margin: 0;
   font-family: PingFangSC-Regular, PingFang SC;
 }
 a {
@@ -33,8 +30,10 @@ a {
 .flex_1 {
   flex: 1;
 }
-.ant-layout {
+#root .ant-layout {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .ant-input:focus,
 .ant-input-focused {
@@ -62,7 +61,7 @@ a {
 .mb_8 {
   margin-bottom: 8px;
 }
-.border_4{
+.borderRadious_4 {
   border-radius: 4px;
 }
 :root {
@@ -83,11 +82,15 @@ a {
 .tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover,
 .tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu:hover,
 .tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-active,
-.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-active,
+.tabCategory
+  .ant-menu-horizontal:not(.ant-menu-dark)
+  > .ant-menu-submenu-active,
 .tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-open,
 .tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open,
 .tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item-selected,
-.tabCategory .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-selected {
+.tabCategory
+  .ant-menu-horizontal:not(.ant-menu-dark)
+  > .ant-menu-submenu-selected {
   color: var(--brightRed);
   border-bottom: 2px solid var(--brightRed);
 }
@@ -97,11 +100,41 @@ a {
   width: 100%;
   padding-top: 24px;
   padding-bottom: 40px;
+  flex: 1;
 }
-.changeProject{
+.changeProject {
   display: flex;
   align-items: center;
   color: #8c8c8c;
   font-size: 16px;
   cursor: pointer;
+}
+
+.h2Title {
+  font-weight: 500;
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #000;
+}
+.secondTitle {
+  font-size: 16px;
+  color: var(--title);
+  margin-bottom: 16px;
+}
+
+/* 黑色标题 */
+.editTitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--title);
+  margin-bottom: 16px;
+}
+.ope {
+  display: flex;
+  flex-direction: row;
+}
+.ope span {
+  margin-right: 8px;
+    cursor: pointer;
+    color: var(--text);
 }

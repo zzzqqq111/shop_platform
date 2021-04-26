@@ -1,27 +1,56 @@
-import React, { useEffect, useMemo, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, InputNumber } from "antd";
-import { useSelector } from "react-redux";
-import {spuStatus} from "@utils/enum"
+import { useSelector, useDispatch } from "react-redux";
+import { spuStatus } from "@utils/enum";
+import { deleteShopCard, updateShopCardData } from "@redux/actions/actionCreator";
 
-const MainTable = React.memo(() => {
+const MainTable = React.memo((props) => {
   const goOtherClick = () => {};
+  const { selectedRowKeys = [], handleRowSelectChange = () => {} } = props;
   const { shoppCardList = [] } = useSelector((state) => state.shop);
-  const [count, setCount] = useState(1);
-  const changeCount = (value) => {
-    setCount(value);
-  };
-  const changebuttonCount = () => {
-    if (count === 1) {
+  const [datalist, setDataList] = useState([]);
+  let newData = JSON.parse(JSON.stringify(datalist));
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setDataList(shoppCardList);
+  }, [shoppCardList]);
+  const changeCount = (value, record, index) => {
+    if (value === 0) {
       return;
     }
-    setCount(count - 1);
+    //库存比较，如果当前数量比库存数量多
+    if (record.centralWarehouseStock < value) {
+      newData[index].spuStatus = 1;
+    } else {
+      newData[index].spuStatus = 0;
+    }
+    if (record.tradeType === 1) {
+      //议价的商品不进行计算
+      newData[index].totalPrice = (value * record.priceText).toFixed(2);
+    } else {
+      newData[index].totalPrice = newData[index].totalPrice;
+    }
+    newData[index].num = value;
+    setDataList(newData);
+    dispatch(
+      updateShopCardData({
+        id: record.id,
+        num: value,
+        skuId: record.skuId
+      })
+    );
   };
+  const deleteCard = id =>{
+    dispatch(deleteShopCard({id: [id]}))
+  }
+
   const columns = [
     {
-      title: "全选",
+      title: "图片",
       dataIndex: "mainPic",
       key: "mainPic",
-      render: (_text,record) => {
+      render: (_text, record) => {
         return (
           <div className="imgBox">
             <img src={_text} style={{ width: "92px", height: "92px" }} />
@@ -71,27 +100,35 @@ const MainTable = React.memo(() => {
       dataIndex: "num",
       key: "num",
       align: "center",
-      render: (text) => {
+      render: (text, record, index) => {
         return (
-          <div className="cartCount">
-            <div className='btn' onClick={changebuttonCount}>
-              -
+          <div>
+            <div className="cartCount">
+              <div
+                className="btn"
+                onClick={() => changeCount(text - 1, record, index)}
+              >
+                -
+              </div>
+              <InputNumber
+                value={text}
+                style={{ textAlign: "center", margin: "0 12px", width: "72px" }}
+                bordered={false}
+                onChange={(value) => changeCount(value, record, index)}
+                min={1}
+              />
+              <div
+                className="btn"
+                onClick={() => changeCount(text + 1, record, index)}
+              >
+                +
+              </div>
             </div>
-            <InputNumber
-              value={count}
-              style={{ textAlign: "center",margin: '0 12px',width: '72px' }}
-              bordered={false}
-              onChange={changeCount}
-              min={1}
-            />
-            <div
-              className='btn'
-              onClick={() => {
-                setCount(count + 1);
-              }}
-            >
-              +
-            </div>
+            {record.spuStatus === 1 && (
+              <div>
+                <span style={{color: '#FF1213'}}>缺货</span> (剩余{record.centralWarehouseStock}卷)
+              </div>
+            )}
           </div>
         );
       },
@@ -100,11 +137,7 @@ const MainTable = React.memo(() => {
       title: "小计(元)",
       align: "center",
       render: (_, record) => {
-        return (
-          <div>
-            ￥{record.num}* {record.priceText}
-          </div>
-        );
+        return <div>￥{record.totalPrice}</div>;
       },
     },
     {
@@ -112,7 +145,7 @@ const MainTable = React.memo(() => {
       render: (_, record) => {
         return (
           <div>
-            <div onClick={() => goOtherClick(1, record)}>删除</div>
+            <div onClick={() => deleteCard(record.id)}>删除</div>
             <div onClick={() => goOtherClick(2, record)}>预约提醒</div>
           </div>
         );
@@ -120,22 +153,18 @@ const MainTable = React.memo(() => {
     },
   ];
   const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(
-        `selectedRowKeys: ${selectedRowKeys}`,
-        "selectedRows: ",
-        selectedRows
-      );
-    },
+    selectedRowKeys,
+    onChange: handleRowSelectChange,
   };
   return (
     <Table
       columns={columns}
       rowKey={(record) => record.id}
-      dataSource={shoppCardList}
+      dataSource={datalist}
       pagination={false}
       rowSelection={{
         type: "checkbox",
+        hideSelectAll: true,
         ...rowSelection,
       }}
     />

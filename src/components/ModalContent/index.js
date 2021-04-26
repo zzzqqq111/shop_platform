@@ -10,7 +10,6 @@ const ModalBox = ({
   title = '',
   width = 1000,
 }) => {
-  console.log(visible)
   return (
     <Modal
       visible={visible}
